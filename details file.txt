@@ -1,0 +1,19 @@
+ssh -i cal_api_key root@139.59.73.183
+
+password : cal_api
+
+
+
+mysql user -- root
+password---cal_api_key
+
+db-- calender_api
+
+
+java -jar api-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
+
+
+webiste password---- link https://euphonious-lolly-610371.netlify.app/
+
+ email === "anujj@lightbulbconsulting.in" &&
+          passsword === "anujj@9999"
