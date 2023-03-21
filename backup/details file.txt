@@ -1,0 +1,7 @@
+ssh -i cal_api_key root@139.59.73.183
+
+mysql user -- root
+password---root
+
+db-- calender_api
+
