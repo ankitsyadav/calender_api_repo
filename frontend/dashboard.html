@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Dashboard</title>
+    <style>
+      /* CSS for styling the dashboard */
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #d8add2;
+      }
+      .navbar {
+        background-color: #333;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+      }
+      .navbar a {
+        color: #fff;
+        text-decoration: none;
+        margin-right: 10px;
+      }
+      .header {
+        text-align: center;
+        padding: 20px;
+      }
+      .center {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+      }
+      .center .card {
+        flex: 1;
+        margin: 10px;
+        padding: 20px;
+        text-align: left;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+        box-shadow: 2px 2px 5px #ccc;
+      }
+      .card h3 {
+        margin-top: 0;
+      }
+      .card p {
+        margin-bottom: 0;
+      }
+      /* CSS for table */
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 20px;
+      }
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 20px;
+        text-align: left;
+      }
+      th {
+        background-color: #f1f1f1;
+      }
+      #user-table tr {
+        border: 3px solid gray;
+        border-bottom: 1px solid #ddd;
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+    </style>
+
+    <style>
+      .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+      }
+
+      .card {
+        width: 50%;
+        padding: 20px;
+        background-color: #f2f2f2;
+        border-radius: 10px;
+        box-shadow: 2px 2px 10px grey;
+      }
+
+      h3 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      label {
+        margin-bottom: 10px;
+        margin-top: 10px;
+      }
+
+      input[type="email"],
+      input[type="date"],
+      input[type="select"] {
+        width: 70%;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        margin-bottom: 20px;
+      }
+
+      button[type="submit"] {
+        width: 40%;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
+          0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        transition: all 0.3s ease-in-out;
+      }
+
+      button[type="submit"]:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2),
+          0 10px 20px rgba(0, 0, 0, 0.19);
+      }
+      .btn-danger {
+        background-color: red;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+      }
+
+      table {
+        width: 100%;
+        margin-top: 20px;
+      }
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #ddd;
+      }
+    </style>
+    <style>
+      .card {
+        box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.5);
+        transition: all 0.3s ease-in-out;
+        perspective: 1000px;
+      }
+
+      .card:hover {
+        transform: rotateX(0) rotateY(0);
+        box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.8);
+      }
+      .center {
+        background-color: #333;
+        transform: perspective(600px) rotateX(2deg);
+        border-radius: 6px;
+      }
+      select {
+        width: 200px;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="#">Home</a>
+      <a href="#">Users</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </div>
+    <div class="header">
+      <h1>Calender API Dashboard</h1>
+    </div>
+    <div class="center">
+      <div class="card">
+        <h3>User Information</h3>
+        <form id="email-form">
+          <label for="options">Choose The Product :</label>
+          <select id="options">
+            <option value="cal">Calender Sheet</option>
+            <option value="demo">demo option</option>
+          </select>
+
+          <label for="email-input">Enter Email:</label>
+          <input type="email" id="email-input" />
+
+          <label for="date-input">Choose Date:</label>
+          <input type="date" id="date-input" />
+
+          <button type="submit">Issue Licence</button>
+        </form>
+
+        <table id="user-table">
+          <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Sheet ID</th>
+            <th>Valid Licence Date</th>
+            <th>Status</th>
+            <th>Delete Record</th>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <script>
+      // JavaScript for adding functionality to the dashboard
+      // function to call the API
+      function getUsers() {
+        const dateInput = document.getElementById("date-input").value;
+        console.log(dateInput);
+        // replace with the URL of your API endpoint
+        const apiUrl = "http://139.59.73.183:8080/users/cal/checkStatus";
+
+        // make a GET request to the API
+        fetch(apiUrl, {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            // loop through the users and add them to the table
+            console.log(data);
+            for (let user of data) {
+              const table = document.getElementById("user-table");
+              const row = table.insertRow();
+              row.insertCell().innerHTML = user.id;
+              row.insertCell().innerHTML = user.email;
+              row.insertCell().innerHTML = user.sheetId;
+              row.insertCell().innerHTML = user.expiryDate.join("-");
+              row.insertCell().innerHTML = user.status;
+              // add delete button
+
+              const deleteBtn = document.createElement("button");
+              deleteBtn.innerHTML = "Delete";
+              deleteBtn.classList.add("btn", "btn-danger");
+              deleteBtn.addEventListener("click", () => {
+                // make a DELETE request to the API
+                if (
+                  confirm(
+                    `Would you like to delete the license of user ${user.id}?`
+                  )
+                ) {
+                  fetch(`http://139.59.73.183:8080/users/cal/${user.id}`, {
+                    method: "DELETE",
+                    mode: "cors",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      id: user.id,
+                    }),
+                  })
+                    .then((response) => response.json())
+                    .then((data) => {
+                      console.log(data);
+                    })
+                    .catch((error) => {
+                      console.error("Error:", error);
+                    });
+                }
+              });
+              row.insertCell().appendChild(deleteBtn);
+
+              if (user.status === false) {
+                row.style.backgroundColor = "orange";
+              } else if (user.status === true) {
+                row.style.backgroundColor = "lightgreen";
+                row.style.boxShadow =
+                  "0 4px 8px 0 rgba(0, 255, 0, 0.2), 0 6px 20px 0 rgba(0, 255, 0, 0.19)";
+              }
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+      // call the function to fetch the data from api
+      getUsers();
+    </script>
+
+    <script>
+      function logout() {
+        // code to handle the logout process (e.g. clear session storage, redirect to login page)
+        sessionStorage.clear();
+        window.location.href = "index.html";
+      }
+    </script>
+    <!-- ------------------------------------------------------------------------------------------------------------------ -->
+    <script>
+      document
+        .getElementById("email-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const emailInput = document.getElementById("email-input").value;
+          const dateInput = document.getElementById("date-input").value;
+          const para = document.getElementById("options").value;
+
+          if (!emailInput || !dateInput) {
+            alert("One or more fields are empty. Please fill in all fields.");
+            return;
+          }
+          const data = {
+            email: emailInput,
+            expiryDate: dateInput,
+          };
+
+          const url = `http://139.59.73.183:8080/users/${para}`;
+
+          fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log("Success:", data);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+        });
+    </script>
+  </body>
+</html>
