@@ -1,0 +1,19 @@
+git bash cammand : 
+
+login krne ke lie git bash me ubantu ka terminal : 
+ssh -i cal_api_key root@143.244.128.220
+
+ssh pass: cal_api
+
+
+
+my sql user name : root
+my sql password : rootpass
+
+database : calender_api
+
+java -jar app.jarname 
+
+
+
+java -jar api-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
